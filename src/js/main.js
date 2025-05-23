@@ -11,6 +11,7 @@ let budget = document.querySelector('.budget-value'),
     income = document.querySelector('.income-value'),
     monthSavings = document.querySelector('.monthsavings-value'),
     yearSavings = document.querySelector('.yearsavings-value'),
+    wrapper = document.querySelector('.wrapper'),
 
     expensesItem = document.getElementsByClassName('expenses-item'),
     expensesCalc = document.getElementsByTagName("button")[0],
@@ -62,12 +63,17 @@ console.log(expensesItem);
     // expensesItem3 = document.getElementById("expenses3"),
     // expensesItem4 = document.getElementById("expenses4");
 
-let money, time, start;
+let money, time, expensesSum,start;
+expensesSum = 0;
+
+// кнопки делаются неактивными
+
 
 startCalc.addEventListener('click', function() {
     time = prompt ("Введите дату в формате YYYY-MM-DD", "");
     money = +prompt ("Ваш бюджет на месяц? (в руб.)", "");
     start = true;
+    wrapper.classList.remove('hidden');
 
     while (isNaN(money) || money == "" || money == null) {
         money = +prompt ("Ваш бюджет на месяц?", ""); 
@@ -97,6 +103,7 @@ expensesCalc.addEventListener('click', function() {
         
         }
         expenses.textContent = sum;
+        expensesSum = sum;
 })
 
 optionalExpensesBtn.addEventListener('click', function() {
@@ -110,7 +117,7 @@ optionalExpensesBtn.addEventListener('click', function() {
 countBtn.addEventListener('click', function() {
     if (appData.budget != undefined) {
     // if (appData.budget == true) {
-    appData.moneyPerDay = (appData.budget / 30).toFixed();    
+    appData.moneyPerDay = ((appData.budget - expensesSum) / 30).toFixed();    
     dayBudget.textContent = appData.moneyPerDay;
 
     //уровень дохода    
